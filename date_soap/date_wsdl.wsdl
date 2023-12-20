@@ -1,0 +1,48 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:tns="http://example.com/date.wsdl"
+             targetNamespace="http://example.com/date.wsdl">
+
+  <types>
+    <xsd:schema targetNamespace="http://example.com/date.wsdl">
+      <xsd:element name="getDateRequest" type="xsd:string"/>
+      <xsd:element name="getDateResponse" type="xsd:string"/>
+    </xsd:schema>
+  </types>
+
+  <message name="getDateRequestMessage">
+    <part name="parameters" element="tns:getDateRequest"/>
+  </message>
+
+  <message name="getDateResponseMessage">
+    <part name="parameters" element="tns:getDateResponse"/>
+  </message>
+
+  <portType name="DateServicePortType">
+    <operation name="getDate">
+      <input message="tns:getDateRequestMessage"/>
+      <output message="tns:getDateResponseMessage"/>
+    </operation>
+  </portType>
+
+  <binding name="DateServiceBinding" type="tns:DateServicePortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="getDate">
+      <soap:operation soapAction="http://example.com/getDate"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+
+  <service name="DateService">
+    <port name="DateServicePort" binding="tns:DateServiceBinding">
+      <soap:address location="http://example.com/dateService"/>
+    </port>
+  </service>
+
+</definitions>
